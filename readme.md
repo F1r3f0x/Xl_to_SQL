@@ -1,5 +1,5 @@
 # Xl to SQL
-## Scans a formated excel file and creates an sql script to fill a database
+## Scans a formated excel file and creates an sql script to fill a database.
 ### Dependencies:
 * Python 3.5
 * Openpyxl 2.4.1
