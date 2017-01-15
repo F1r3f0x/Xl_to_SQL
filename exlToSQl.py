@@ -29,7 +29,7 @@ print('exlToSQL - Scans a formated excel file and creates an sql script to fill'
 if len(sys.argv) == 2:  
     file_name = sys.argv[1] # 2nd arg is our file
     start_time = time.clock()
-    print ('Leyendo libro {} \n'.format(file_name))
+    print ('Scanning Book =  {} \n'.format(file_name))
     # we open the excel file and read only values
     book = pyxl.load_workbook(file_name,read_only = True, data_only = True)
     output_file = open("output.sql","w")
