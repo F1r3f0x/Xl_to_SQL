@@ -1,4 +1,4 @@
-/* Generated with exlToSQL.py -- Patricio Labin Correa
+/* Generated with Xl_to_SQL.py -- Patricio Labin Correa
 File = C:\Users\plabi\Mio\python3\excelToSQL\test_books\test_datos_inner.xlsx
 ====================================================================*/
 insert into enfermedad values(1,'Gripe');
