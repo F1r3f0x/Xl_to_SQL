@@ -6,7 +6,7 @@
         a database
 
         Dependencies:
-        -   Python 3.6
+        -   Python 3.5
         -   Openpyxl 2.4.1
 
         TODO:
@@ -70,7 +70,7 @@ for sheet in book.worksheets:  # We start scanning the book sheet by sheet
             sentence = ''.join([sentence,');'])
             output_file.write('{}\n'.format(sentence))
     output_file.write('\n')
-    print('Rows proccesed = {}'.format(row_counter-1))
+    print('Rows proccesed = {}\n'.format(row_counter-1))
 output_file.close()
 print('\nOperation complete!, Processing Time = {}s'
         .format(time.clock()-start_time))
