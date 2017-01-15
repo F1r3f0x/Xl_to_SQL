@@ -22,60 +22,59 @@ import openpyxl as pyxl
 
 print('\n====================================================================='
         '==========\n')
-print('exlToSQL - Transforma un archivo excel en entrada de datos para SQL' + 
-        'standard\n')
+print('exlToSQL - Scans a formated excel file and creates an sql script to fill' +
+        'a database\n')
 
-# Si hay 2 argumentos (script + archivo) seguir
+# if there is 2 args, start (script + file)
 if len(sys.argv) == 2:  
-    file_name = sys.argv[1] # asignar el 2do argumento como nombre del archivo
+    file_name = sys.argv[1] # 2nd arg is our file
     start_time = time.clock()
     print ('Leyendo libro {} \n'.format(file_name))
-    # Obtener el archivo excel y leer solo valores (no las formulas)
+    # we open the excel file and read only values
     book = pyxl.load_workbook(file_name,read_only = True, data_only = True)
     output_file = open("output.sql","w")
-    output_file.write('/* Generado con exlToSQL.py -- Patricio Labin ' +
+    output_file.write('/* Generated with exlToSQL.py -- Patricio Labin ' +
                             'Correa\n')
-    output_file.write('Archivo = {}\n'.format(sys.argv[1]))
+    output_file.write('File = {}\n'.format(sys.argv[1]))
     output_file.write('===============================================' +
                             '=====================*/\n')
 
-    for sheet in book.worksheets:  # Recorremos el libro por hoja (worksheets)
-        print ('Leyendo Hoja = {}'.format(sheet.title))
+    for sheet in book.worksheets:  # We start scanning the book sheet by sheet
+        print ('Scanning Sheet = {}'.format(sheet.title))
         row_counter = 0
         for row in sheet.iter_rows():
             row_counter += 1
-            if row_counter > 1:       # ignorar el titulo de la tabla
+            if row_counter > 1:       # we don't care about the table title
                 sentence = ''.join(['insert into ',sheet.title,' values('])
                 first_cell = True
                 for celda in row:
-                    #introducir el contenido de la celda en una string
+                    # dump the cell content to a string
                     cell_content = str(celda.value)
                     empty_cell = False   
-                    if cell_content != 'None':      # ignorar celdas vacias
+                    if cell_content != 'None':      # we don't care about empty cells
                         if not cell_content.isnumeric():
                             compare = cell_content.lower()
                             if not(compare == 'true' or compare == 'false'
                                     or compare == 'null'):
                                 cell_content = ''.join(["'",cell_content,
                                                         "'"])
-                        # introducir comas despues de la 1ra celda
+                        # here we put commas
                         if not first_cell:
                             sentence = ''.join([sentence,',',cell_content])
                         else:
                             first_cell = False
                             sentence = ''.join([sentence,cell_content])
-                #escribir sentencia al archivo
+                #write the final sql instruction to the output file
                 sentence = ''.join([sentence,');'])
                 output_file.write('{}\n'.format(sentence))
-         #filas procesadas sin el titulo
         output_file.write('\n')
-        print('Filas procesadas = {}'.format(row_counter-1))
+        print('Rows proccesed = {}'.format(row_counter-1))
     output_file.close()
     print()
-    print('Operacion Completada!, Tiempo de proceso = {}s'
+    print('Operation complete!, Processing Time = {}s'
             .format(time.clock()-start_time))
 else:
-    print ('Solo se permite un archivo')
+    print ('Only one file is allowed or you are missing an argument.')
 print()
 print ('====================================================================' +
         '===========')
