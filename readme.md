@@ -9,7 +9,7 @@
 * Locate tables
 * Multiple file processing
 * Improve file input
-* Transform excel date to sql date
+* Handle Datetime
 
 #### Patricio Labin Correa - 01/17
 #### GPL 3 License
