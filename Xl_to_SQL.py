@@ -13,7 +13,8 @@
 	- Locate tables
 	- Multiple file processing
 	- Improve file input
-	- Transform excel date to sql date
+	- Transform excel date to sql date (ready)
+	- Handle datetime
 """
 
 import sys
