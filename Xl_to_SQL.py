@@ -18,23 +18,25 @@
 
 import sys
 import time
+from datetime import datetime
 import argparse
 import openpyxl as pyxl
 
 if __name__ == '__main__':
 
 	parser = argparse.ArgumentParser(prog='Xl_to_SQL.py')
-	parser.add_argument('Input_File', type=str, help='Input Excel file to process')
+	parser.add_argument('Input_File', type=str, 
+		help='Input Excel file to process')
 	parser.add_argument('--Output_File', type=str, default = 'output.sql'
-				, help='Ouput SQL script')
+				,help='Ouput SQL script')
 	args = parser.parse_args()
 
 	start_time = time.clock()
 
-	print('\n====================================================================='
-		'==========\n')
-	print('Xl to SQL - Scans a formated excel file and creates an sql script to fill' +
-		'a database\n')
+	print('\n================================================================' +
+		'===============\n')
+	print('Xl to SQL - Scans a formated excel file and creates an sql script' + 
+		' to fill a database\n')
 
 	# we open the excel file and read only values
 	file_name = args.Input_File        
@@ -58,20 +60,29 @@ if __name__ == '__main__':
 				first_cell = True
 				for celda in row:
 					# dump the cell content to a string
-					cell_content = str(celda.value)
+					cell_content = celda.value
+					str_cell = str(celda.value)
 					empty_cell = False   
-					if cell_content != 'None':      # we don't care about empty cells
-						if not cell_content.isnumeric():
-							compare = cell_content.lower()
+					# we don't care about empty cells
+					if cell_content != 'None':
+						#SQL date format
+						if isinstance(cell_content,datetime):
+							str_cell = cell_content.year + '-'
+							str_cell += cell_content.month + '-'
+							str_cell += cell_content.day
+
+						elif not str_cell.isnumeric():
+							compare = str_cell.lower()
 							if not(compare == 'true' or compare == 'false'
 								or compare == 'null'):
-								cell_content = ''.join(["'",cell_content,"'"])
+								str_cell = ''.join(["'",str_cell,"'"])
+
 						# here we put commas
 						if not first_cell:
-							sentence = ''.join([sentence,',',cell_content])
+							sentence = ''.join([sentence,',',str_cell])
 						else:
 							first_cell = False
-							sentence = ''.join([sentence,cell_content])
+							sentence = ''.join([sentence,str_cell])
 
 				#write the final sql instruction to the output file
 				sentence = ''.join([sentence,');'])
@@ -83,5 +94,5 @@ if __name__ == '__main__':
 	output_file.close()
 	print('\nOperation complete!, Processing Time = {}s'
 		.format(time.clock()-start_time))
-	print ('\n====================================================================' +
-		'===========')
+	print ('\n===============================================================' +
+		'================')
