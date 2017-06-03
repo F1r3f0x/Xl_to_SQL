@@ -47,7 +47,6 @@ if __name__ == '__main__':
 	output_file = open(args.Output_File,"w")
 	output_file.write('/* Generated with Xl_to_SQL.py -- Patricio Labin ' +
 				'Correa\n')
-	output_file.write('File = {}\n'.format(sys.argv[1]))
 	output_file.write('===============================================' +
 				'=====================*/\n')
 
@@ -66,17 +65,18 @@ if __name__ == '__main__':
 					empty_cell = False   
 					# we don't care about empty cells
 					if cell_content != 'None':
+						"""
 						#SQL date format
 						if isinstance(cell_content,datetime):
 							str_cell = cell_content.year + '-'
 							str_cell += cell_content.month + '-'
 							str_cell += cell_content.day
-
-						elif not str_cell.isnumeric():
+						"""
+						if not str_cell.isnumeric():
 							compare = str_cell.lower()
 							if not(compare == 'true' or compare == 'false'
 								or compare == 'null'):
-								str_cell = ''.join(["'",str_cell,"'"])
+								str_cell = ''.join(['"',str_cell,'"'])
 
 						# here we put commas
 						if not first_cell:
