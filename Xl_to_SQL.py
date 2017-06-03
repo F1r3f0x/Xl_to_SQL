@@ -44,7 +44,7 @@ if __name__ == '__main__':
 	print ('Scanning Book =  {} \n'.format(file_name))
 	book = pyxl.load_workbook(file_name,read_only = True, data_only = True)
 
-	output_file = open(args.Output_File,"w")
+	output_file = open(args.Output_File,"w",encoding="utf-8")
 	output_file.write('/* Generated with Xl_to_SQL.py -- Patricio Labin ' +
 				'Correa\n')
 	output_file.write('===============================================' +
