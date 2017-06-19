@@ -10,11 +10,8 @@
     -   Openpyxl 2.4.1
 
     TODO:
-    - Locate tables
+    - Locate tables in a single page.
     - Multiple file processing
-    - Improve file input
-    - Transform excel date to sql date (ready)
-    - Handle datetime
 """
 
 import time
@@ -63,13 +60,6 @@ if __name__ == '__main__':
                     empty_cell = False
                     # we don't care about empty cells
                     if cell_content != 'None':
-                        """
-                        #SQL date format
-                        if isinstance(cell_content,datetime):
-                            str_cell = cell_content.year + '-'
-                            str_cell += cell_content.month + '-'
-                            str_cell += cell_content.day
-                        """
                         if not str_cell.isnumeric():
                             compare = str_cell.lower()
                             if not(compare == 'true' or compare == 'false'
