@@ -1,5 +1,5 @@
 """
-    Patricio Labin Correa - 01/17
+    Patricio Labin Correa (F1r3f0x) - 01/17
 
     Xl_to_SQL.py -
     Scans a formated excel file and creates an sql script to fill
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='Xl_to_SQL.py')
     parser.add_argument('Input_File', type=str,
                         help='Input Excel file to process')
-    parser.add_argument('--o', type=str, default='output.sql',
+    parser.add_argument('--output', type=str, default='output.sql',
                         help='Output SQL script')
     args = parser.parse_args()
 
@@ -42,7 +42,7 @@ if __name__ == '__main__':
     print('Scanning Book =  {} \n'.format(file_name))
     book = pyxl.load_workbook(file_name, read_only=True, data_only=True)
 
-    output_file = open(args.Output_File, "w", encoding="utf-8")
+    output_file = open(args.output, "w", encoding="utf-8")
     output_file.write('/* Generated with Xl_to_SQL.py -- Patricio Labin ' +
                       'Correa\n')
     output_file.write('===============================================' +
