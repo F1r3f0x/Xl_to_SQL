@@ -2,12 +2,12 @@
     Patricio Labin Correa (F1r3f0x) - 01/17
 
     Xl_to_SQL.py -
-    Scans a formated excel file and creates an sql script to fill
+    Scans a formatted excel file and creates an sql script to fill
     a database
 
     Dependencies:
-    -   Python 3.5
-    -   Openpyxl 2.4.1
+    -   Python 3.6
+    -   Openpyxl 2.4.5
 
     TODO:
     - Locate tables in a single page.
@@ -21,9 +21,9 @@ import openpyxl as pyxl
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(prog='Xl_to_SQL.py')
-    parser.add_argument('Input_File', type=str,
+    parser.add_argument('input_file', type=str,
                         help='Input Excel file to process')
-    parser.add_argument('--output', type=str, default='output.sql',
+    parser.add_argument('-o', type=str, default='output.sql',
                         help='Output SQL script')
     args = parser.parse_args()
 
@@ -31,15 +31,15 @@ if __name__ == '__main__':
 
     print('\n================================================================' +
           '===============\n')
-    print('Xl to SQL - Scans a formated excel file and creates an sql script' +
+    print('Xl to SQL - Scans a formatted excel file and creates an sql script' +
           ' to fill a database\n')
 
     # we open the excel file and read only values
-    file_name = args.Input_File
+    file_name = args.input_file
     print('Scanning Book =  {} \n'.format(file_name))
     book = pyxl.load_workbook(file_name, read_only=True, data_only=True)
 
-    output_file = open(args.output, "w", encoding="utf-8")
+    output_file = open(args.o, "w", encoding="utf-8")
     output_file.write('/* Generated with Xl_to_SQL.py -- Patricio Labin ' +
                       'Correa\n')
     output_file.write('===============================================' +
@@ -81,7 +81,6 @@ if __name__ == '__main__':
         print('Rows proccesed = {}\n'.format(row_counter - 1))
 
     output_file.close()
-    print('\nOperation complete!, Processing Time = {}s'.format(time.clock() -
-                                                                start_time))
+    print('\nOperation complete!, Time = {}s'.format(time.clock() -start_time))
     print ('\n===============================================================' +
            '================')
