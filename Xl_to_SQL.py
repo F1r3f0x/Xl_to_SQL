@@ -1,13 +1,12 @@
 """
-    Patricio Labin Correa (F1r3f0x) - 02/18
+    Patricio Labin Correa (F1r3f0x) - 03/19
 
     Xl_to_SQL.py -
     Scans a formatted excel file and creates an sql script to fill
     a database
 
     Dependencies:
-    -   Python 3.6
-    -   Openpyxl 2.4.5
+    -   Python 3.7.2
 
     TODO:
     - Locate tables in a single page.
@@ -18,6 +17,7 @@
 import time
 import argparse
 import openpyxl as pyxl
+import pymysql
 
 
 def get_sql_insert_sentence(table_name: str, values: list):
@@ -37,6 +37,8 @@ def get_sql_insert_sentence(table_name: str, values: list):
 
     # Validate every value
     for k, val in enumerate(values):
+
+        val = pymysql.escape_string(val)
 
         if val == 'None':
             parsed_values.append('\" \"')
@@ -74,7 +76,7 @@ if __name__ == '__main__':
                         help='Output SQL script')
     args = parser.parse_args()
 
-    start_time = time.clock()
+    start_time = time.process_time() 
 
     print('\n================================================================' +
           '===============\n')
@@ -113,6 +115,7 @@ if __name__ == '__main__':
         print('Rows proccesed = {}\n'.format(row_counter - 1))
 
     output_file.close()
-    print('\nOperation completed!, Time = {}s'.format(time.clock() - start_time))
+    print('\nOperation completed!, Time = {}s'.format(time.process_time() - start_time))
     print('\n===============================================================' +
           '================')
+          

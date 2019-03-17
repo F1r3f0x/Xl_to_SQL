@@ -8,10 +8,10 @@
 ### Usage:
     Xl_to_SQL.py [-h] [-o O] input_file
 
-* ####positional arguments:
+* #### positional arguments:
   * input_file  Input Excel file to process
 
-* ####optional arguments:
+* #### optional arguments:
   * -h, --help  show this help message and exit
   * -o O        Output SQL script
 
